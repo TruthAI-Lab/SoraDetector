@@ -1,0 +1,55 @@
+video_summary: |-
+  The following are a set of key frames in chronological order from AI generated video, which depict the whole video from start to end.
+  Based on the key frames above and the object changes for all key frame from dynamic knowledge graph extraction, generate a brief and accurate description for the video.
+  the objects changes for all key frames:{changes}
+static_KG: |-
+  The following is a frame from AI generated video, which may violate the physical laws and logic of the real world. Perform the following actions:
+  - Identify objects in the foreground of the frame and output a list. If a type of object appears repeatedly, list them all in the form of A_1, A_2 and so on.
+  - Identify the relations between objects in the last step and output a list in the format [ENTITY 1, RELATION, ENTITY 2]
+  - Convert the result above strictly adhering to the following structure in one line:{{"objects": [ojbect_1, object_2, xxx], "relations":[[ENTITY 1, RELATION, ENTITY 2], [ENTITY 1, RELATION, ENTITY 2],xxx]}}
+
+dynamic_KG: |-
+  The following are 3 frames in chronological order from a clip of AI generated video, which may violate the physical laws and logic of the real world. The first frame is the earliest among 3 frames. Based on 3 frame images as well as the objects and relations between objects in the frame as hint, perform the following actions:
+  - Identify the changes or consistencies of the identified input "objects" across provided frames, describing any transformation, motion, or alteration in state as well as object's position. If an object remains unchanged, indicate its consistency throughout the frames. The detail step are following:
+    - Identify the objects changes from first frame to second frame and then from second frame to third frame and so on.
+    - Summarize the objects changes from first frame to second frame and then from second frame to third frame and so on.... and output the overall changes across all frames.
+    - Output in the format {{"object_1": "change/unchanged", "object_2": "change/unchanged"}}
+  - Convert the result above strictly adhering to the following structure in one line:{{"changes":{{"object_1": "how overall changes or unchanged", "object_2": "how overall changes or unchanged",xxx}}}}
+  Input:{relation}
+
+dynamic_hall_detection: |-
+  The following are several frames in chronological order from a of AI generated video, which depicts "{origin_prompt}". The first frame is the earliest among frames. Based on frame images, perform the following actions:
+  - First I will give the the definition of all type of dynamic hallucinations: 
+    1.Clipping: Unnatural overlapping and intersection that the boundaries of object models do not correspond to their actual physical relationships.
+    2.Implausible fusion: Implausible/Unnatural fusion between objects, such as two objects gradually become one object when interaction.
+    3.Implausible appearance or disappearance: The sudden appearance or disappearance of an object without reasonable physical interaction.
+    4.Implausible motion: The unnatural movement of an object, such as movement without support
+    5.Implausible transform: Objects undergo unnatural deformation, such as when a solid suddenly turns into a fluid.
+    6.Implausible penetration: The unnatural penetration of an object through another object in interaction.
+    7.Physical interaction errors: The interaction that should have occurred did not occur/An interaction that should not have occurred occurred.
+    8.Logical interaction error: Timing error/Timing reversal.
+    9.Other hallucination: all other implausible phenomenons except mentioned above that violate the physical laws and logic of the real world.
+  - For all identified objects, Given the relation between and them the changes of them across frames, Detect one by one whether the hallucinations listed above occur in the given three frames and give a score representing the intensity for each hallucinations. The higher the score, the more severe the hallucinations are, with a maximum score of 10 points.
+  the objects and relations between objects: {relation}
+  the objects changes across all frames: {change}
+static_hall_detection: |-
+  The following is a frame from a of AI generated video, which depicts "{origin_prompt}". Based on the frame image, perform the following actions:
+  - First I will give the the definition of all type of static hallucinations: 
+    1.Geometric structure irrationality: Objects' shapes, proportions, and topologies are inconsistent with real-world common sense, showing irrational deformations, omissions, redundancies, discontinuities, or inconsistencies.
+    2.Biological structure irrationality: Biological organs' structures defy real-world common sense, presenting illogical deformations, omissions, redundancies, discontinuities, or inconsistencies.
+    3.Lighting, shadow, and material physical inaccuracy: The direction, intensity, color of lighting, shape of shadows, and surface material properties in images contradict physical laws and don't match the objects' position, environmental conditions, or the physical properties of materials in the real world.
+    4.Color distribution disharmony: Color distribution and combinations in images don't follow natural statistical laws, showing unrealistic, disharmonious, or abnormal color combinations.
+    5.Depth of field and focal length unreality: The depth of field and perspective relationships in images defy physical laws and photography principles, contradicting the spatial positioning of objects.
+    6.Object composition and scene semantic inconsistency: The arrangement of objects and scene settings in images violate common sense logic, semantic constraints, and scenario-specific norms, featuring irrational, contradictory, rare, or impossible combinations and setups.
+    7.Motion and blur inconsistency: The direction, extent, and trajectory of motion blur in images contradict the motion state and speed of moving objects, presenting irrational or contradictory motion blur effects.
+    8.Physical phenomenon inauthenticity: Various physical phenomena in images, like reflection and refraction, defy physical laws, conflicting with the materials, shapes, positions, and environmental conditions of objects.
+    9.Image quality inconsistency: The overall and local quality of images, like resolution, is inconsistent, showing noticeable quality differences or traces of post-processing.
+    10.Other hallucination: all other implausible phenomenons except mentioned above that violate the physical laws and logic of the real world.
+  - For all object identified in video, given the relation between them, Detect one by one whether the hallucinations listed above occur in the given frame and give a score representing the intensity for each hallucinations. The higher the score, the more severe the hallucinations are, with a maximum score of 10 points.
+  relation:{relation}
+
+inconsistency_comparison: |-
+  The following are a set of key frames in chronological order from AI generated video, which depict the whole video from start to end.
+  Given th origin prompt of AI generated video and the generated video, wichi is generated by the set of key frames, compare the inconsistency in the descriptions of two prompts and give a score representing the intensity for inconsistency. The higher the score, the more severe the inconsistency is, with a maximum score of 10 points.
+  generated_prompt:{generated_prompt}
+  origin prompt:{origin_prompt}
